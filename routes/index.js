@@ -66,7 +66,7 @@ exports.startCommunity = function(req,res,db, transporter){
 	var passHash = encrypt(comPass);
 	var errors = "";
 	
-	if(comName==""||comPass==""||comEmail==""||comVPass==""){
+	if(comName.length==0||comPass.length==0||comEmail.length==0||comVPass.length==0){
 		errors = errors + "All fields are required. ";
 		res.send({
 			success:false,
