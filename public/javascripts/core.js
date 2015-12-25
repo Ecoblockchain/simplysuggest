@@ -162,14 +162,14 @@ $(document).ready(function(){
 					});
 					
 				});
-				
-				
-				
-				
+
+				setTimeout(function(){
+					$(".dis-note").slideDown();
+				},noteShowTime);
 				
 				$(".enable-loggedin").show();
 				$(".enable-loggedout").hide();
-				$(".dis-note").slideDown(noteShowTime);
+				
 			}else{
 				$("#login-form").css("background-color","#5DC97F")
 					.css("width","400px").css("height","200px").css("overflow","hidden");

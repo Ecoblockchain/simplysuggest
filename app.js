@@ -13,6 +13,7 @@ var mysql = require('mysql');
 var app = express();
 
 // all environments
+//app.set('port', process.env.PORT || 3000);
 app.set('port', process.env.PORT || 80);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -49,6 +50,12 @@ var db = mysql.createConnection({
 	password : "mysql4545",
 	database : "simplysuggest",
 });
+/*var db = mysql.createConnection({
+	host : "localhost",
+	user : "root",
+	password : "",
+	database : "simplysuggest",
+});*/
 
 db.connect(function(err) {
   if (err) {
