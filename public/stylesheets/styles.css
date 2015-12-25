@@ -269,4 +269,17 @@ body {
   margin-top: 30px;
   margin-left: 10px; }
 
+@media screen and (max-width: 1150px) {
+  #header {
+    font-size: 250%; }
+
+  .textarea-1 {
+    height: 100px; }
+
+  #background-note-form {
+    height: 380px; }
+
+  #menu {
+    margin-top: 1px; } }
+
 /*# sourceMappingURL=styles.css.map */
