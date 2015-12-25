@@ -50,6 +50,14 @@ var db = mysql.createConnection({
 	database : "simplysuggest",
 });
 
+db.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+
+  console.log('connected as id ' + db.threadId);
+});
 //main functionality
 app.get('/', function(req,res){
 	index.index(req,res,db);
