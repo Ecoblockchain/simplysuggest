@@ -17,10 +17,16 @@ function encrypt(string){
 }
 
 //***global functionality
-exports.getUserID = function(req, res){
-	console.log(req.session.userID);
+exports.getUserData = function(req, res, db){
 	if(req.session.userID!=undefined){
-		res.send({"id":req.session.userID});
+		db.query('SELECT name,code,email FROM communities WHERE com_id = ?',[req.session.userID], function(err, docs) {
+			res.send({
+				"id": req.session.userID,
+				"name": docs[0].name,
+				"code": docs[0].code,
+				"email": docs[0].email
+			});
+		});
 	}else{
 		res.send({"id":""});
 	}

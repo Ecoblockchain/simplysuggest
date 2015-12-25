@@ -6,6 +6,8 @@ $(document).ready(function(){
 	$("#submit-note-form").animate({marginTop: '165px'}, 1000);
 	$("#background-note-form").animate({marginTop: '20px'}, 1000);
 	
+	
+	$(".close-popups").html("x");
 	/*$("#note-pin").animate({top: '-30px'}, 500).animate({left: '30px'}, 500, function(){
 		$("#submit-note-form").animate({rotate: '-7deg'}, 200);
 		$("#note-pin").animate({rotate: '0deg'}, 200);
@@ -21,8 +23,11 @@ $(document).ready(function(){
 	
 	//render correct DOM elements depending on session status.
 	function renderPage(justIn){
-		$.post('/getUserID', function(loggedin, status){
+		$.post('/getUserData', function(loggedin, status){
 			if(loggedin.id.length!=0){
+				$("#login-name-ph").html(loggedin.name);
+				$("#board-code-ph").html(loggedin.code);
+				$("#board-email-ph").html(loggedin.email);
 				$("#login-fields").hide();
 				$("#board-content").show();
 				var noteShowTime;
@@ -184,7 +189,7 @@ $(document).ready(function(){
 	renderPage(false);
 	
 	//send note handler
-	$("#sn-submit").click(function(){
+	var sendNoteEvent = function(){
 		var comCode = $("#sn-com-code").val();
 		var email = $("#sn-email").val();
 		var message = $("#sn-message").val();
@@ -207,7 +212,7 @@ $(document).ready(function(){
 					}, 1500);
 					setTimeout(function(){
 						$("#note-bindings").show();
-						$("#snf-fields").html(snfHTML);
+						$("#snf-fields").html($(snfHTML));
 						$("#background-note-form").css("background-color", "#f2dc60");
 						$("#success-msg").html("");
 						$("#ripped-bindings").hide();
@@ -230,6 +235,9 @@ $(document).ready(function(){
 				});
 			}
 		});
+	}
+	$("#sn-submit").on('click',function(){
+		sendNoteEvent();
 	});
 	
 	//login predict comName handler
@@ -317,7 +325,7 @@ $(document).ready(function(){
 				toStay = [];
 			}
 			toStay = toStay.concat(elements);
-			var toFadeOut = ["success-msg","bnf-text","sc-form","login-form","sc-messages","submit-note-form","background-note-form"];
+			var toFadeOut = ["acc-info-container","success-msg","bnf-text","sc-form","login-form","sc-messages","submit-note-form","background-note-form"];
 	
 	
 			for(var i in toFadeOut){
@@ -369,7 +377,8 @@ $(document).ready(function(){
 	});	
 	
 	$("#ml-newboard").click(function(){
-		showPage(["sc-form"]);
+		showPage(["sc-form", "sc-fields"]);
+		$("#sc-form").animate({backgroundColor: "#5DC97F"}, 1000);
 	});
 	
 	$("#header").click(function(){
@@ -388,4 +397,13 @@ $(document).ready(function(){
 			$("#bnf-text").css("font-size", "80%").html(result).show();
 		});
 	});	
+	
+		
+	$("#ml-acc-info").click(function(){
+		$("#acc-info-container").slideDown();
+	});
+	
+	$(".close-popups").click(function(){
+		$("#acc-info-container, #email-sender-form").slideUp();
+	});
 });

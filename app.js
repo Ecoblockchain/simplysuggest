@@ -73,8 +73,8 @@ app.get('/', function(req,res){
 	index.index(req,res,db);
 });
 
-app.post('/getUserID', function(req,res){
-	index.getUserID(req,res);
+app.post('/getUserData', function(req,res){
+	index.getUserData(req,res,db);
 });
 
 app.post('/predictComName', function(req,res){
