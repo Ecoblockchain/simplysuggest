@@ -161,11 +161,11 @@ $(document).ready(function(){
 						});
 					});
 					
+					setTimeout(function(){
+							$(".dis-note").slideDown();
+					},noteShowTime);
+					
 				});
-
-				setTimeout(function(){
-					$(".dis-note").slideDown();
-				},noteShowTime);
 				
 				$(".enable-loggedin").show();
 				$(".enable-loggedout").hide();
