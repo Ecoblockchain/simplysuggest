@@ -163,9 +163,9 @@ $(document).ready(function(){
 					
 				});
 				
-				setTimeout(function(){
-					$(".dis-note").slideDown();
-				}, noteShowTime);
+				
+				$(".dis-note").slideDown(noteShowTime);
+				
 				
 				$(".enable-loggedin").show();
 				$(".enable-loggedout").hide();
