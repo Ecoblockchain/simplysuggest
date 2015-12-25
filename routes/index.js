@@ -68,6 +68,10 @@ exports.startCommunity = function(req,res,db, transporter){
 	
 	if(comName==""||comPass==""||comEmail==""||comVPass==""){
 		errors = errors + "All fields are required. ";
+		res.send({
+			success:false,
+			message: errors
+		});
 	}else{
 	
 		if(!isValidEmail(comEmail)){
@@ -154,12 +158,7 @@ exports.startCommunity = function(req,res,db, transporter){
 			}	
 			
 		});	
-	}else{
-		res.send({
-			success:false,
-			message: errors
-		});
-	}	
+	}
 };
 
 exports.logout = function(req,res){
