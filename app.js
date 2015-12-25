@@ -46,7 +46,7 @@ if ('development' == app.get('env')) {
 var db = mysql.createConnection({
 	host : "localhost",
 	user : "root",
-	password : "",
+	password : "mysql4545",
 	database : "simplysuggest",
 });
 
