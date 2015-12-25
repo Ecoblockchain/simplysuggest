@@ -13,8 +13,28 @@ var mysql = require('mysql');
 var app = express();
 
 // all environments
-//app.set('port', process.env.PORT || 3000);
-app.set('port', process.env.PORT || 80);
+var db;
+if ('development' == app.get('env')) {
+	app.set('port', process.env.PORT || 3000);
+	app.use(express.errorHandler());
+  
+  	db = mysql.createConnection({
+		host : "localhost",
+		user : "root",
+		password : "",
+		database : "simplysuggest"
+	});
+  
+}else{
+	app.set('port', process.env.PORT || 80);
+	db = mysql.createConnection({
+		host : "localhost",
+		user : "root",
+		password : "mysql4545",
+		database : "simplysuggest"
+	});
+}
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -39,23 +59,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
-
-var db = mysql.createConnection({
-	host : "localhost",
-	user : "root",
-	password : "mysql4545",
-	database : "simplysuggest",
-});
-/*var db = mysql.createConnection({
-	host : "localhost",
-	user : "root",
-	password : "",
-	database : "simplysuggest",
-});*/
 
 db.connect(function(err) {
   if (err) {
