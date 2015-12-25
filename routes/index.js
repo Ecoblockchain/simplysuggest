@@ -154,7 +154,12 @@ exports.startCommunity = function(req,res,db, transporter){
 			}	
 			
 		});	
-	}
+	}else{
+		res.send({
+			success:false,
+			message: errors
+		});
+	}	
 };
 
 exports.logout = function(req,res){
