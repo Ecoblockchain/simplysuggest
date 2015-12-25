@@ -1,0 +1,77 @@
+extends index.jade
+block content
+	div(id="menu")
+		span(class="menu-links enable-loggedout" id = "ml-login") LEADER LOGIN&ensp;&middot;&ensp;
+		
+		span(class="menu-links enable-loggedin",id = "ml-logout") LOGOUT&ensp;&middot;&ensp;
+
+		span(class="menu-links enable-loggedout",id = "ml-newboard") START NEW BOARD&ensp;&middot;&ensp;
+
+		span(class="menu-links",id = "ml-help") HELP&ensp;&middot;&ensp;
+
+		span(class="menu-links",id = "ml-about") ABOUT US
+		
+	div(class = "enable-loggedout", id = "loggedout-body")
+			
+		div(id = "background-note-form" style = 'z-index: 1;position:relative;')
+			img(src='/images/note-bindings.png', id = 'note-bindings1',class = "note-bindings")
+			div(style="height:325px")
+				div(id = 'bnf-text')
+				div(id="success-msg") Successfully submitted note!
+			
+		div(id="submit-note-form"  style = 'z-index: 1000;position:relative;')
+			img(src='/images/note-bindings.png',id = 'note-bindings' ,class = "note-bindings")
+			img(src='/images/ripped-bindings.png',id = 'ripped-bindings')
+	
+			
+			div(id="snf-fields" style = 'z-index: 1000;position:relative;')
+				input(type = "text", class = "textfield-1 note-field", id = "sn-com-code", placeholder = "Board Code...",spellcheck='false',autocomplete="off")
+				br
+				input(type = "text", class = "textfield-1 note-field", id = "sn-email", placeholder = "Your Email (optional)...",spellcheck='false')
+				br
+				textarea(class = "textarea-1 note-field", id = "sn-message", placeholder = "Your suggestion...",spellcheck='false')
+				br
+				input(type = "button", value = "Submit", class = "note-field button-1", id= "sn-submit")
+	
+		br
+		
+		div(id = "sc-form")
+			div(id = 'sc-fields')
+				input(type = "text", class = "textfield-1", id = "sc-com-name", placeholder = "Board Name...")
+				br
+				input(type = "password", class = "textfield-1", id = "sc-com-pass", placeholder = "Board Password...")
+				br
+				input(type = "password", class = "textfield-1", id = "sc-com-vpass", placeholder = "Verify Password...")
+				br
+				input(type = "text", class = "textfield-1", id = "sc-com-email", placeholder = "Your Email...")
+				br
+				input(type = "button", value = "Sign Up", class = "button-1  login-button", id = "sc-submit")
+				br
+				br
+			div(id = 'sc-messages')
+			
+			div(id="go-back-note1") << Go back
+			
+			div(id="go-back-note2") << Go back
+	
+	div(id = "login-form")
+		div(id="login-fields")
+		
+			div(id = "pred-comName-list")
+			input(type = "text", class = "textfield-1", id = "login-com-name", placeholder = "Board Name...")
+			br
+			input(type = "password", class = "textfield-1", id = "login-com-pass", placeholder = "Password...")
+			br
+			input(type = "button", value = "Login", class = "button-1 login-button", id= "login-submit")
+			br
+			div(id="go-back-note") << Go back 
+		
+		div(id = "board-content")
+		
+		div(id = "email-sender-form")
+		
+			textarea(id="email-sender-tarea", placeholder = "Message...")
+			
+			input(type="submit", class = "button-1 login-button", value = "Send", id = "email-sender-submit")
+			
+			div(id = "email-sender-res-msg")
