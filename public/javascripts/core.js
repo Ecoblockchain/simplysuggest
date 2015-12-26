@@ -29,7 +29,7 @@ $(document).ready(function(){
 	}).ajaxStop(function(){
 		$("#loader-img").fadeOut(200);
 	}); 
-	
+	var setEmail;
 	//render correct DOM elements depending on session status.
 	function renderPage(justIn){
 		$.post('/getUserData', function(loggedin, status){
@@ -37,6 +37,7 @@ $(document).ready(function(){
 				$("#login-name-ph").html(loggedin.name);
 				$("#board-code-ph").html(loggedin.code);
 				$("#board-email-ph").val(loggedin.email);
+				setEmail = loggedin.email;
 				//$("#login-form").css("height", "auto").css("min-height", "250px");
 				$("#login-fields").hide();
 				$("#board-content").show();
@@ -430,7 +431,7 @@ $(document).ready(function(){
 	});
 	
 	//profile change 
-	var setEmail;
+	
 	
 	$("#board-email-ph").focus(function(){
 		setEmail = $("#board-email-ph").val();
