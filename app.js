@@ -111,6 +111,10 @@ app.post('/noteAction', function(req,res){
 	notes.noteAction(req,res,db, transporter);
 });
 
+app.post('/updateProfile', function(req,res){
+	index.updateProfile(req,res,db);
+});
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port') + app.get('env'));
 });

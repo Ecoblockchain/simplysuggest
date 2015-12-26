@@ -58,6 +58,31 @@ block content
 			
 			div(id="go-back-note2") << Go back
 	
+	
+	div(id = "email-sender-form" class = "loggedin-popup")
+		
+		span(class='close-popups')
+	
+		textarea(id="email-sender-tarea", placeholder = "Message...")
+		
+		input(type="submit", class = "button-1 login-button", value = "Send", id = "email-sender-submit")
+		
+		div(id = "email-sender-res-msg")
+			
+	div(id = "acc-info-container" class = "loggedin-popup")
+		span(class='close-popups') 
+		p Board Name: 
+			span(id='login-name-ph' class = 'acc-info-txt')
+				p Board Code: 
+					span(id='board-code-ph' class = 'acc-info-txt')
+						p Board Email: 
+							input(type = 'text',id='board-email-ph' class = 'acc-info-txt ait-field')
+							p Board Password (reset): 
+									input(type='password',id='board-pass-ph' class = 'acc-info-txt ait-field', placeholder = '*******')
+									p(id = 'vpass-ph', style = 'display: none;') Verify Password: 
+										input(type='password',id='board-vpass-ph' class = 'acc-info-txt ait-field', placeholder = '*******')
+									input(type='button', value = 'Save', class = 'button-1  login-button', id = 'save-profile', style = 'margin-top: -10px;')
+		
 	div(id = "login-form")
 		div(id="login-fields")
 		
@@ -72,21 +97,3 @@ block content
 		
 		div(id = "board-content")
 		
-		div(id = "email-sender-form")
-		
-			span(class='close-popups')
-		
-			textarea(id="email-sender-tarea", placeholder = "Message...")
-			
-			input(type="submit", class = "button-1 login-button", value = "Send", id = "email-sender-submit")
-			
-			div(id = "email-sender-res-msg")
-			
-		div(id = "acc-info-container")
-			span(class='close-popups') 
-			p Board Name: 
-				span(id='login-name-ph' class = 'acc-info-txt')
-					p Board Code: 
-						span(id='board-code-ph' class = 'acc-info-txt')
-							p Board Email: 
-								span(id='board-email-ph' class = 'acc-info-txt')

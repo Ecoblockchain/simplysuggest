@@ -236,22 +236,12 @@ body
   font-weight: bold
   display: none
 
-#email-sender-form
-  position: absolute
-  padding: 10px
-  background: #5DC97F
-  border-radius: 2px
-  margin-left: 30px
-  box-shadow: 0px 0px 30px grey
-  width: 400px
-  height: 400px
-  display: none
-
 #email-sender-tarea
-  width: 100%
+  width: 90%
   height: 70%
   font-size: 120%
   outline-width: none
+  border-radius: 2px
   font-family: quicksand
   border: none
   resize: none
@@ -269,22 +259,35 @@ body
   display: none
   margin-top: 30px
   margin-left: 10px
+
   
-#acc-info-container
-  position: absolute
-  padding: 10px
+.loggedin-popup
+  position: block
+  padding: 20px
   background: #5DC97F
-  border-radius: 2px
-  margin-left: 30px
+  border-radius: 2px 2px 0px 0px
+  margin: 0 auto
   color: white
-  box-shadow: 0px 0px 30px grey
-  width: 400px
+  width: 500px
   height: 200px
+  text-align: center
   display: none
-	
+  
+#email-sender-form
+  height: 340px
+  
 .acc-info-txt
   color: #3574ad
   font-weight: bold
+
+.ait-field
+  background: #5DC97F
+  border: none
+  font-family: quicksand
+  outline-width: 0px
+  font-size: 105%
+  width: 250px
+  cursor: pointer
   
 .close-popups
   color: salmon
@@ -292,7 +295,10 @@ body
   font-size: 120%
   cursor: pointer
   float: right	
-	
+
+#save-profile
+  display: none
+  
 @media screen and (max-width: 1150px)
   #header
     font-size: 250%

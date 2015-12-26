@@ -6,6 +6,11 @@ function isValidEmail(email){
 	}
 } 
 
+String.prototype.nl2br = function()
+{
+    return this.replace(/\n/g, "<br />");
+}
+
 exports.sendNote = function(req,res,db){
 	var comCode = req.body.comCode;
 	var email = req.body.email;
@@ -75,12 +80,13 @@ exports.noteAction = function(req,res,db, transporter){
 						var successMsg = "Email successfully sent.";
 						if(emailAct=="self"){
 							toEmail = fromEmail;
-							subject = "Reminder Suggestion...";
+							subject = "Suggestion Reminder...";
+							bodyHTML = "<i>Your saved suggestion for "+docs[0].name+"</i><br><br>";
 						}else{
 							successMsg += " Expect any replies in your actual inbox.";
 							bodyHTML = "<i>Regarding your suggestion to " + docs[0].name + "...</i><br><br>";
 						}
-						var bodyText = req.body.esBodyText;
+						var bodyText = (req.body.esBodyText).nl2br();
 						bodyHTML +=bodyText;
 						if(bodyText.length>5){
 							var mailOptions = {
@@ -88,7 +94,7 @@ exports.noteAction = function(req,res,db, transporter){
 								to: toEmail, // list of receivers
 								subject: subject, // Subject line
 								text: '', // plaintext body
-								html: bodyHTML // html body
+								html: bodyHTML + "<br><br>SimplySuggest" // html body
 							};
 						
 							transporter.sendMail(mailOptions, function(error, info){

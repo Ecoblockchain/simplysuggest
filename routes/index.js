@@ -126,7 +126,7 @@ exports.startCommunity = function(req,res,db, transporter){
 						}
 					}else{
 						db.query("INSERT INTO communities VALUES('',?,?,?,?)", [comName, comCode, passHash, comEmail], function(err){
-							var bodyHTML = "Dear " + comName + ",<br><br>Your new board has successfully been created. The code that will be used by your suggesters is: <b>" +comCode+"</b>. <br> Please share this code with your desired suggesters!<br>best wishes,<br>SimplySuggest"; 
+							var bodyHTML = "Dear " + comName + ",<br><br>Your new board has successfully been created. The code that will be used by your suggesters is: <b>" +comCode+"</b>. <br> Please share this code with your desired suggesters! If you have any questions please contact <i>hello@simplysuggest.it</i>.<br><br>Thank you,<br><br>SimplySuggest"; 
 							var mailOptions = {
 										from: "simplysuggest@gmail.com",
 										to: comEmail, // list of receivers
@@ -179,4 +179,64 @@ exports.getStaticContent = function(req,res,db){
 	db.query('SELECT text FROM static_content WHERE name = ?', [name], function(err,docs){
 		res.send(docs[0].text);
 	});	
-}
+};
+
+exports.updateProfile = function(req,res,db){
+	var newEmail = req.body.email;
+	var newPass = req.body.pass;
+	var vnewPass = req.body.vpass;
+	
+	var queryEmail = "";
+	var queryPass = "";
+	var queryParams = [];
+	
+	var emailAttempt = true;
+	
+	var errors = "";
+
+	if(isValidEmail(newEmail)){
+
+		queryEmail = 'email = ?';
+		queryParams.push(newEmail);
+		
+	}else if(newEmail.length>0){
+		errors = errors + "Invalid Email. ";
+	}else{
+		emailAttempt = false;
+	}
+	
+	if(newPass.length!=0){
+		if(newPass==vnewPass){
+			queryPass = "password = ?";
+			queryParams.push(encrypt(newPass));
+		}else{
+			errors = errors + "Your passwords do not match. ";
+		}
+	}
+	
+	if(queryEmail.length>0&&queryPass.length>0){
+		queryPass = "," + queryPass;
+	}
+
+	queryParams.push(req.session.userID);
+
+	var query = "UPDATE communities SET "+queryEmail+queryPass+" WHERE com_id = ?";
+
+	if(errors.length==0){
+		db.query('SELECT email FROM communities WHERE email = ?',[newEmail], function(err, Edocs) {
+			if(Edocs.length>0&&emailAttempt==true){
+				errors = errors + "That email is already in use.";
+				res.send({success:false, msg: errors});
+			}else{
+				db.query(query, queryParams, function(err,docs){
+					console.log(err);
+					res.send({success:true, msg: "Successfully updated profile."});
+				});
+			}
+		});	
+		
+		
+	}else{
+		res.send({success:false, msg: errors});
+	}	
+};

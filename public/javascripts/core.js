@@ -1,8 +1,7 @@
 "use strict";
 
 $(document).ready(function(){
-
-
+	
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -37,22 +36,35 @@ $(document).ready(function(){
 			if(loggedin.id.length!=0){
 				$("#login-name-ph").html(loggedin.name);
 				$("#board-code-ph").html(loggedin.code);
-				$("#board-email-ph").html(loggedin.email);
+				$("#board-email-ph").val(loggedin.email);
+				//$("#login-form").css("height", "auto").css("min-height", "250px");
 				$("#login-fields").hide();
 				$("#board-content").show();
+				
+				$("#email-sender-tarea").val("From: "+loggedin.email);
+				
 				var noteShowTime;
+				var loginFormHeight;
+				if ($(window).width() <= 1250){	
+					loginFormHeight = "350px";
+				}else{
+					loginFormHeight = "500px";
+					
+				}	
 				if(justIn==false){
 					//render page instantly
+					var totalHeight = $("#login-form").prop('scrollHeight');
 					$("#login-form").show();
 					$("#login-form").css("background-color","#c09569")
-					.css("width","500px").css("height","500px").css("overflow","auto");
+					.css("width","500px").css("height",loginFormHeight).css("overflow", "auto");
 					noteShowTime = 0;
 				}else{
 					//animate
+					var totalHeight = $("#login-form").prop('scrollHeight');
 					$("#login-form").animate({backgroundColor:"#c09569"}, 500)
-					.animate({height:"500px"}, 500)
+					.animate({height: loginFormHeight}, 500)
 					.animate({width:"500px"}, 500)
-					.css("overflow","auto");
+					.css("overflow", "auto");
 					noteShowTime = 1500;
 				}
 				
@@ -153,7 +165,7 @@ $(document).ready(function(){
 									$("#email-sender-res-msg").fadeOut();
 									$("#email-sender-res-msg").html("");
 									$("#email-sender-form").slideUp();
-								}, 2000);
+								}, 3000);
 							});
 						});
 					});
@@ -415,5 +427,64 @@ $(document).ready(function(){
 	
 	$(".close-popups").click(function(){
 		$("#acc-info-container, #email-sender-form").slideUp();
+	});
+	
+	//profile change 
+	var setEmail;
+	
+	$("#board-email-ph").focus(function(){
+		setEmail = $("#board-email-ph").val();
+		$("#save-profile").fadeIn();
+	}).blur(function(){
+		if($("#board-email-ph").val()==setEmail){
+			$("#save-profile").fadeOut();
+		}
+	});
+	$("#board-pass-ph").focus(function(){
+		$("#vpass-ph").fadeIn();
+		$("#save-profile").fadeIn();
+		$("#acc-info-container").animate({height: "260px"}, 500);
+	}).blur(function(){
+		if($("#board-pass-ph").val().length==0){
+			$("#acc-info-container").animate({height: "200px"}, 500);
+			$("#vpass-ph").fadeOut();
+			$("#save-profile").fadeOut();
+		}
+	});
+	
+	$("#save-profile").click(function(){
+		var email = $("#board-email-ph").val();
+		
+		if(email==setEmail){
+			email = "";
+		}
+		
+		$.post('/updateProfile', {
+			email: email,
+			pass: $("#board-pass-ph").val(),
+			vpass: $("#board-vpass-ph").val()
+			}, function(result){
+				var color;
+				if(result.success==false){
+					color = "#f36e4e";
+				}else{
+					color = "#90EE90";
+				}
+				$("#save-profile").animate({width: "97%", backgroundColor: color}, 1000);
+				$("#save-profile").animate({width: "97%"});
+				$("#save-profile").val("").css("border", "none");
+				$("#save-profile").val(result.msg);
+				$("#board-pass-ph").val("");
+				$("#board-vpass-ph").val("");
+				setTimeout(function(){
+					$("#save-profile").val("Save").css("border", "1px dashed white");
+					$("#save-profile").animate({width: "100px", backgroundColor: "#5DC97F"}, 500);
+					if(result.success==true){
+						$("#vpass-ph, #save-profile").slideUp();
+						$("#acc-info-container").animate({height: "200px"}, 500);
+						$("#email-sender-tarea").val("From: "+email);
+					}
+				}, 2500);
+		});
 	});
 });
