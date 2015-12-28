@@ -62,7 +62,7 @@ exports.getNotes = function(req,res,db){
 };
 
 
-exports.noteAction = function(req,res,db, transporter){
+exports.noteAction = function(req,res,db, mail){
 	var nID =  req.body.nID;
 	var comID = req.session.userID;
 	var action = req.body.action;
@@ -97,13 +97,30 @@ exports.noteAction = function(req,res,db, transporter){
 								html: bodyHTML + "<br><br>SimplySuggest" // html body
 							};
 						
-							transporter.sendMail(mailOptions, function(error, info){
+							mail.sendMail(mailOptions, function(error, info){
 								if(error){
 									res.send({success:false, msg: "Unknown error."});
 								}else{
 									res.send({success:true, msg: successMsg});
 								}
 							});
+							/*var emailData = {
+							    from: 'postmaster@simplysuggest.it',
+							    to: toEmail,
+							    subject: subject,
+							    html: bodyHTML + "<br><br>SimplySuggest"
+							}
+
+							   
+						    mail.messages().send(emailData, function (err, body) {
+						        if (err) {
+						            
+						            console.log("got an error: ", err);
+						            res.send({success:false, msg: "Unknown error."});
+						        }else {
+						           res.send({success:true, msg: successMsg});
+						        }
+						    });*/
 						}else{
 							res.send({success:false, msg: "Your message is too short."});
 						}

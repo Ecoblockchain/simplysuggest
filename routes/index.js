@@ -64,7 +64,7 @@ exports.predictComName = function(req,res,db){
 	});
 }
 
-exports.startCommunity = function(req,res,db, transporter){
+exports.startCommunity = function(req,res,db, mail){
 	var comName = req.body.comName;
 	var comPass = req.body.comPass;
 	var comVPass = req.body.comVPass;
@@ -135,7 +135,7 @@ exports.startCommunity = function(req,res,db, transporter){
 										html: bodyHTML // html body
 									};
 						
-							transporter.sendMail(mailOptions, function(error, info){
+							mail.sendMail(mailOptions, function(error, info){
 								res.send({
 									success:true,
 									message: "Successfully created board. Your board code is <b style = 'color: grey;'>" + comCode + "</b>."

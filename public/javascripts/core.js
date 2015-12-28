@@ -10,7 +10,7 @@ $(document).ready(function(){
 	ga('create', 'UA-23313986-3', 'auto');
 	ga('send', 'pageview');
 
-	var snfHTML = $("#snf-fields").html();
+	var snfClone = $("#snf-fields").clone();
 	var loginFormHTML = $("#login-form").html();
 	$("#submit-note-form").animate({marginTop: '165px'}, 1000);
 	$("#background-note-form").animate({marginTop: '20px'}, 1000);
@@ -227,15 +227,15 @@ $(document).ready(function(){
 					$("#ripped-bindings").show();
 					$("#submit-note-form").animate({rotate: '20deg'}, 200).animate({boxShadow: '0px 0px 30px grey'}, 200);
 					$("#submit-note-form").animate({marginLeft:"+=1500px"}, 1500);
-					$("#snf-fields").html("<div style = 'height:265px;font-size:150%;color:white;'>"+comCode+"<br>"+email+"<br>"+message+"</div>");
+					
 					setTimeout(function(){
 						$("#background-note-form").animate({backgroundColor:"#46b97c"}, 200);
 						$("#success-msg").html("Successfully submitted note!");
+						$("#sn-com-code, #sn-email, #sn-message").val("");
 						$("#success-msg").show();
 					}, 1500);
 					setTimeout(function(){
 						$("#note-bindings").show();
-						$("#snf-fields").html($(snfHTML));
 						$("#background-note-form").css("background-color", "#f2dc60");
 						$("#success-msg").html("");
 						$("#ripped-bindings").hide();

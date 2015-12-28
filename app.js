@@ -51,14 +51,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 var nodemailer = require('nodemailer');
 
 // create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+var mail = nodemailer.createTransport({
+    host: 'localhost',
+    port: 25,
     auth: {
-        user: 'simplysuggest@gmail.com',
-        pass: 'BY6vb7oF8RG'
+        user: 'auto@simplysuggest.it',
+        pass: 'snowleopard123'
     }
 });
 
+
+
+/*
+var Mailgun = require('mailgun-js');
+
+
+var mailGunKey = 'key-d1f94135eab0b0ae490929311f1e45f0';
+var mailGunDomain = 'sandbox4c7a06fd230d4ecdabec9fb56d6f98fe.mailgun.org';
+var mailGunFrom = 'postmaster@simplysuggest.it';
+
+var mail = new Mailgun({apiKey: mailGunKey, domain: mailGunDomain});
+*/
 
 db.connect(function(err) {
   if (err) {
@@ -86,7 +99,7 @@ app.post('/login', function(req,res){
 });
 
 app.post('/startCommunity', function(req,res){
-	index.startCommunity(req,res,db, transporter);
+	index.startCommunity(req,res,db, mail);
 });
 
 app.post('/logout', function(req,res){
@@ -108,7 +121,7 @@ app.post('/getNotes', function(req,res){
 });
 
 app.post('/noteAction', function(req,res){
-	notes.noteAction(req,res,db, transporter);
+	notes.noteAction(req,res,db, mail);
 });
 
 app.post('/updateProfile', function(req,res){
