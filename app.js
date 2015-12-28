@@ -52,11 +52,10 @@ var nodemailer = require('nodemailer');
 
 // create reusable transporter object using SMTP transport
 var mail = nodemailer.createTransport({
-    host: 'localhost',
-    port: 25,
+    service: 'Gmail',
     auth: {
-        user: 'auto@simplysuggest.it',
-        pass: 'snowleopard123'
+        user: 'simplysuggest@gmail.com',
+        pass: 'BY6vb7oF8RG'
     }
 });
 
