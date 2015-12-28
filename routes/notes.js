@@ -99,6 +99,7 @@ exports.noteAction = function(req,res,db, mail){
 						
 							mail.sendMail(mailOptions, function(error, info){
 								if(error){
+									console.log(info + error);
 									res.send({success:false, msg: "Unknown error."});
 								}else{
 									res.send({success:true, msg: successMsg});
