@@ -48,29 +48,18 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-var nodemailer = require('nodemailer');
+var nodemailer = require("nodemailer");
 
-// create reusable transporter object using SMTP transport
-var mail = nodemailer.createTransport({
-    service: 'Gmail',
+
+var mail = nodemailer.createTransport("SMTP",{
+    host: "smtp.zoho.com",
+    port: 587,
     auth: {
-        user: 'simplysuggest@gmail.com',
-        pass: 'BY6vb7oF8RG'
+        user: "notice@simplysuggest.it",
+        pass: "auto4545e"
     }
 });
 
-
-
-/*
-var Mailgun = require('mailgun-js');
-
-
-var mailGunKey = 'key-d1f94135eab0b0ae490929311f1e45f0';
-var mailGunDomain = 'sandbox4c7a06fd230d4ecdabec9fb56d6f98fe.mailgun.org';
-var mailGunFrom = 'postmaster@simplysuggest.it';
-
-var mail = new Mailgun({apiKey: mailGunKey, domain: mailGunDomain});
-*/
 
 db.connect(function(err) {
   if (err) {
@@ -80,6 +69,7 @@ db.connect(function(err) {
 
   console.log('connected as id ' + db.threadId);
 });
+
 //main functionality
 app.get('/', function(req,res){
 	index.index(req,res,db);

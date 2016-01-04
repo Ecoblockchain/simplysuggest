@@ -89,39 +89,22 @@ exports.noteAction = function(req,res,db, mail){
 						var bodyText = (req.body.esBodyText).nl2br();
 						bodyHTML +=bodyText;
 						if(bodyText.length>5){
-							var mailOptions = {
-								from: fromEmail,
-								to: toEmail, // list of receivers
-								subject: subject, // Subject line
-								text: '', // plaintext body
-								html: bodyHTML + "<br><br>SimplySuggest" // html body
-							};
-						
-							mail.sendMail(mailOptions, function(error, info){
-								if(error){
-									console.log(info + error);
-									res.send({success:false, msg: "Unknown error."});
-								}else{
-									res.send({success:true, msg: successMsg});
-								}
-							});
-							/*var emailData = {
-							    from: 'postmaster@simplysuggest.it',
+							
+							var emailData = {
+							    from: 'notice@simplysuggest.it',
 							    to: toEmail,
 							    subject: subject,
 							    html: bodyHTML + "<br><br>SimplySuggest"
 							}
 
 							   
-						    mail.messages().send(emailData, function (err, body) {
+						    mail.sendMail(emailData, function (err, res_) {
 						        if (err) {
-						            
-						            console.log("got an error: ", err);
-						            res.send({success:false, msg: "Unknown error."});
+						           res.send({success:false, msg: "Unknown error."});
 						        }else {
 						           res.send({success:true, msg: successMsg});
 						        }
-						    });*/
+						    });
 						}else{
 							res.send({success:false, msg: "Your message is too short."});
 						}

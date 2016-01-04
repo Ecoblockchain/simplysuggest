@@ -101,7 +101,9 @@ exports.startCommunity = function(req,res,db, mail){
 		}
 		
 		db.query('SELECT email FROM communities WHERE email = ?',[comEmail], function(err, Edocs) {
-			if(Edocs.length>0){
+			console.log("g:" + Edocs);
+			if(Edocs!=""){
+				
 				errors = errors + "Your email is already in use.";
 			}
 
@@ -127,20 +129,30 @@ exports.startCommunity = function(req,res,db, mail){
 					}else{
 						db.query("INSERT INTO communities VALUES('',?,?,?,?)", [comName, comCode, passHash, comEmail], function(err){
 							var bodyHTML = "Dear " + comName + ",<br><br>Your new board has successfully been created. The code that will be used by your suggesters is: <b>" +comCode+"</b>. <br> Please share this code with your desired suggesters! If you have any questions please contact <i>hello@simplysuggest.it</i>.<br><br>Thank you,<br><br>SimplySuggest"; 
-							var mailOptions = {
-										from: "simplysuggest@gmail.com",
+							
+
+							var mailData = {
+										from: "notice@simplysuggest.it",
 										to: comEmail, // list of receivers
-										subject: "Your new SimplySuggest board!", // Subject line
-										text: '', // plaintext body
+										subject: "Your new SimplySuggest board!", // Subject line 
 										html: bodyHTML // html body
 									};
 						
-							mail.sendMail(mailOptions, function(error, info){
-								res.send({
-									success:true,
-									message: "Successfully created board. Your board code is <b style = 'color: grey;'>" + comCode + "</b>."
-								});
-							});
+						
+							mail.sendMail(mailData, function (err, res_) {
+						        if (err) {
+						            console.log(err + res_);
+						            res.send({
+										success:false,
+										message: "Unknown Error."
+									});
+						        }else {
+						        	res.send({
+										success:true,
+										message: "Successfully created board. Your board code is <b style = 'color: grey;'>" + comCode + "</b>."
+									});
+						        }
+						    });
 					
 						});
 					}

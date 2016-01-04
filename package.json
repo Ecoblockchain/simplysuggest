@@ -11,7 +11,7 @@
     "nodemon":"*",
     "mysql":"*",
     "crypto":"*",
-    "nodemailer":"*",
+    "nodemailer":"0.7.1",
     "mailgun-js":"*"
   }
 }
