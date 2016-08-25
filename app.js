@@ -48,18 +48,6 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-var nodemailer = require("nodemailer");
-
-
-var mail = nodemailer.createTransport("SMTP",{
-    host: "smtp.zoho.com",
-    port: 587,
-    auth: {
-        user: "notice@simplysuggest.it",
-        pass: "auto4545e"
-    }
-});
-
 
 db.connect(function(err) {
   if (err) {
